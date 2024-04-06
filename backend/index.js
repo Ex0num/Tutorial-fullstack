@@ -1,17 +1,15 @@
 const express = require('express');
 const cors = require('cors'); // Importa el módulo cors
 const mongoose = require('mongoose')
-
 const app = express();
 
 //---------------------- Implemento Express y CORS -----------------------//
 app.use(cors()); // Aplica CORS antes de definir las rutas
 app.use(express.json()); // Define que Express maneje los datos como JSON
 
-// const url = "mongodb+srv://tutorialadmin:admin123@tutorial-fullstack.mj0uxna.mongodb.net/consultorio"
-
 //------------------------------- Endpoints -------------------------------//
-app.post('/login', async (req, res) => {
+app.post('/login', async (req, res) => 
+{
     console.log(req.body);
     let correo_recibido = req.body.email;
     let password_recibida = req.body.password;
@@ -25,7 +23,8 @@ app.post('/login', async (req, res) => {
     "QUE DICE TODO OK, SINO ERROR");
     console.log();
 
-    try {
+    try 
+    {
         const url = "mongodb+srv://tutorialadmin:admin123@tutorial-fullstack.mj0uxna.mongodb.net/consultorio";
         const conexion = await mongoose.connect(url);
         console.log("Se hizo una conexión a:", conexion.connection.name);
@@ -35,12 +34,17 @@ app.post('/login', async (req, res) => {
         console.log(usuariosEncontrados);
         console.log("");
 
-        if (usuariosEncontrados.length > 0) {
+        if (usuariosEncontrados.length > 0 && usuariosEncontrados[0].correo == correo_recibido && usuariosEncontrados[0].password == password_recibida) 
+        {
             res.status(200).json({resultado: "OK"});
-        } else {
+        } 
+        else 
+        {
             res.status(400).json({resultado: "ERROR"});
         }
-    } catch (error) {
+    } 
+    catch (error) 
+    {
         console.error("Error:", error);
         res.status(500).json({resultado: "ERROR"});
     }
