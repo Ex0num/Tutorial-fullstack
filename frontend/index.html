@@ -1,0 +1,81 @@
+<!-- Elementos HTML -->
+<h1>Ingrese su usuario y contraseña para probar el proyecto full-stack (Solo funciona el usuario test@gmail.com test123)</h1>
+<input type="email" placeholder="Ingrese su correo" id="correoIngresado">
+<input type="password" placeholder="Ingrese su contraseña" id="passwordIngresada">
+<button id="botonEnviar">ENVIAR</button>
+
+
+
+
+
+<!-- Codigo CSS dentro de HTML -->
+<style>
+    h1
+    {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    input
+    {
+        border: 2px solid black;
+        text-align: center;
+    }
+    
+    #correoIngresado
+    {
+        width: 300px;
+    }
+</style>
+
+
+
+
+
+
+<!-- Codigo JS dentro de html -->
+<script>
+    
+    let elem_html_correo_ingresado = document.getElementById("correoIngresado");
+    let elem_html_password_ingresada = document.getElementById("passwordIngresada");
+
+    document.getElementById("botonEnviar").addEventListener("click", ()=>{
+        
+        console.log("SE INTENTO ENVIAR EL FORMULARIO CON LOS DATOS");
+        let correo_ingresado = elem_html_correo_ingresado.value;
+        let password_ingresada = elem_html_password_ingresada.value;
+        console.log(correo_ingresado);
+        console.log(password_ingresada);
+
+        console.log("ENVIANDO DATOS AL BACKEND.");
+        
+        // Objeto con los datos a enviar
+        let data = {
+            email: correo_ingresado,
+            password: password_ingresada
+        };
+
+        // Opciones para la solicitud fetch (ENVIAMOS DATOS ASIQUE LO QUE CORRESPONDE ES USAR POST)
+        let options = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        };
+
+        // Realizar la solicitud fetch al backend
+        fetch('http://localhost:3101/login', options)
+            .then(response => 
+            {
+                console.log(response);
+                if (response.status == 200) 
+                {
+                    alert("TE LOGEASTE!!!");
+                } 
+                else 
+                {
+                    alert("NO TE PUDISTE LOGEAR...");
+                }
+            })
+            .catch(error => {console.error("Error de red:", error);});
+    });
+
+</script>
